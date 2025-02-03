@@ -6,14 +6,22 @@
 #include <string.h>
 #include <fcntl.h>
 
+int close_window(t_data *data) // Fermer avec le bouton X
+{
+    mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+    printf("Vous avez fermé la fenêtre avec le bouton X\n");
+    exit(0);
+    return (0);
+}
+
 int handle_keypress(int keycode, t_data *data)
 {
     if (keycode == ESC_KEY) // ESC pour quitter
     {
         mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+        printf("Vous avez ferme la fenetre avec ESC\n");
         exit(0);
     }
-
     if (keycode == W_KEY) // W (haut)
         move_player(data, data->player_x, data->player_y - 1);
     else if (keycode == S_KEY) // S (bas)
@@ -22,57 +30,35 @@ int handle_keypress(int keycode, t_data *data)
         move_player(data, data->player_x - 1, data->player_y);
     else if (keycode == D_KEY) // D (droite)
         move_player(data, data->player_x + 1, data->player_y);
-
+    else if (keycode == UP_KEY) // UP (haut)
+        move_player(data, data->player_x, data->player_y - 1);
+    else if (keycode == DOWN_KEY) // DOWN (bas)
+        move_player(data, data->player_x, data->player_y + 1);
+    else if (keycode == LEFT_KEY) // LEFT (gauche)
+        move_player(data, data->player_x - 1, data->player_y);
+    else if (keycode == RIGHT_KEY) // RIGHT (droite)
+        move_player(data, data->player_x + 1, data->player_y);
     draw_map(data); // Redessiner après le déplacement
     return (0);
 }
 
-char **read_map(const char *filename, int *rows, int *cols)
-{
-    FILE *file = fopen(filename, "r");
-    if (!file)
-    {
-        perror("Error opening file");
-        return NULL;
-    }
-
-    char **map = NULL;
-    char buffer[1024]; // Taille maximale d'une ligne
-    int row_count = 0;
-
-    while (fgets(buffer, sizeof(buffer), file))
-    {
-        if (*cols == 0)
-            *cols = strlen(buffer) - 1; // Calculer la largeur sans '\n'
-
-        map = realloc(map, sizeof(char *) * (row_count + 1));
-        map[row_count] = malloc(*cols + 1);
-        strncpy(map[row_count], buffer, *cols);
-        map[row_count][*cols] = '\0'; // Supprimer le '\n'
-        row_count++;
-    }
-
-    fclose(file);
-    *rows = row_count;
-    return map;
-}
-
 int main(int argc, char **argv)
 {
-    t_data data;
+    t_data  data;
+    int     y;
+    int     x;
 
     // Vérifie qu'un fichier de carte est passé en argument
     if (argc != 2)
     {
-        printf("Usage: %s <map_file.ber>\n", argv[0]);
+        printf("Aucun paramatre. Usage: %s <map_file.ber>\n", argv[0]);
         return (1);
     }
-
     data.rows = 0;
     data.cols = 0;
     data.collected = 0;
     data.total_collectibles = 0;
-
+    data.moves = 0;
     // Lire la carte passée en argument
     data.map = read_map(argv[1], &data.rows, &data.cols);
     if (!data.map)
@@ -80,41 +66,30 @@ int main(int argc, char **argv)
         printf("Error loading map: %s\n", argv[1]);
         return (1);
     }
-
-    // Trouver la position initiale du joueur + nombre de collectibles
-    int y = 0;
+    validate_map(&data);
+    y = 0; 
     while (y < data.rows)
-    {
-        int x = 0;
+    {// Trouver la position initiale du joueur + nombre de collectibles
+        x = 0;
         while (x < data.cols)
         {
-            if (data.map[y][x] == 'P')
+            if (data.map[y][x] == PLAYER)
             {
                 data.player_x = x;
                 data.player_y = y;
             }
-            else if (data.map[y][x] == 'C')
+            else if (data.map[y][x] == COLLECTIBLE)
                 data.total_collectibles++;
             x++;
         }
         y++;
     }
-
-    // Initialiser MiniLibX
-    data.mlx_ptr = mlx_init();
+    data.mlx_ptr = mlx_init();// Initialiser MiniLibX
     data.win_ptr = mlx_new_window(data.mlx_ptr, data.cols * TILE_SIZE, data.rows * TILE_SIZE, "so_long");
-
-    // Charger les images
-    load_sprites(&data);
-
-    // Afficher la carte
-    draw_map(&data);
-
-    // Gérer les touches
-    mlx_key_hook(data.win_ptr, handle_keypress, &data);
-
-    // Boucle MiniLibX
-    mlx_loop(data.mlx_ptr);
-
+    load_sprites(&data);// Charger les images
+    draw_map(&data);// Afficher la carte
+    mlx_key_hook(data.win_ptr, handle_keypress, &data);// Gérer les touches
+    mlx_hook(data.win_ptr, CLOSE_EVENT, 0, close_window, &data);
+    mlx_loop(data.mlx_ptr);// Boucle MiniLibX
     return (0);
 }
