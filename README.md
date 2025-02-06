@@ -9,3 +9,8 @@ The main goal of the So_Long project is to create a fully functional 2D game tha
 ------
 
 Prior to starting with this project, it’s recomended to learn about the miniLibX, the simple graphic library that we use at 42. Take a look in this page to get an overview: https://github.com/S-LucasSerrano/miniLibX_sample](https://harm-smits.github.io/42docs/libs/minilibx/loops.html)
+
+
+**Example of a 2D basic game:**
+
+![Screenshot from 2025-02-06 14-57-34](https://github.com/user-attachments/assets/4b527f27-9b34-4ba0-8a52-46de7dbf70ff)
