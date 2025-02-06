@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:07 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 13:54:41 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:24:28 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	handle_keypress(int keycode, t_data *data)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		free_map(data->map, data->rows);
-		ft_printf("Vous avez fermé la fenetre avec ESC\n");
+		ft_printf("Fenetre fermé avec ESC\n");
 		exit(0);
 	}
 	if (keycode == W_KEY)

@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:43 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 13:02:31 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:07:19 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ void		put_tile_to_window(t_data *data, int x, int y, char tile);
 void		move_player(t_data *data, int new_x, int new_y);
 /*--------------------read_map.c--------------------- */
 char		**read_map(const char *filename, int *rows, int *cols);
+int			count_map_rows(const char *filename);
+int			get_map_cols(const char *filename);
+char		**allocate_map_grid(int rows, int cols);
+void		fill_map_grid(char **map, int fd, int rows, int cols);
 /*--------------------validate_map.c----------------- */
 void		validate_map(t_data *data);
 void		count_elements(t_data *data, int *player_count, int *exit_count,

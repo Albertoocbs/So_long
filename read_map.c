@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:37:32 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 13:37:26 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:23:20 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,129 +17,119 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-char	**read_map(const char *filename, int *rows, int *cols)
+int	count_map_rows(const char *filename)
 {
-	FILE	*file;
-	char	**map;
-	int		row_count;
-	char	buffer[1024];
-	size_t	line_length;
+	char	buffer[1];
+	int		rows;
+	int		fd;
 
-	file = fopen(filename, "r");
-	if (!file)
-	{
-		perror("Error opening file");
-		return (NULL);
-	}
-	map = NULL;
-	row_count = 0;
-	*cols = 0;
-	while (fgets(buffer, sizeof(buffer), file))
-	{
-		line_length = strlen(buffer);
-		if (buffer[line_length - 1] == '\n')
-			buffer[line_length - 1] = '\0';
-		else
-			line_length++;
-		if (*cols == 0)
-			*cols = line_length - 1;
-		map = realloc(map, sizeof(char *) * (row_count + 1));
-		if (!map)
-		{
-			perror("Memory allocation error");
-			fclose(file);
-			return (NULL);
-		}
-		map[row_count] = malloc(line_length);
-		if (!map[row_count])
-		{
-			perror("Memory allocation error");
-			fclose(file);
-			return (NULL);
-		}
-		strcpy(map[row_count], buffer);
-		row_count++;
-	}
-	fclose(file);
-	*rows = row_count;
-	return (map);
+	fd = 0;
+	rows = 0;
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	while (read(fd, buffer, 1) > 0)
+		if (buffer[0] == '\n')
+			rows++;
+	close(fd);
+	return (rows);
 }
 
-/*int	count_lines(const char *filename)
+int	get_map_cols(const char *filename)
 {
-	int		fd;
-	int		lines;
 	char	buffer[1];
+	int		cols;
+	int		fd;
 
+	fd = 0;
+	cols = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error opening file");
-		return (-1);
+		ft_printf("Error: Cannot open file to count columns\n");
+		return (0);
 	}
-	lines = 0;
-	while (read(fd, buffer, 1) > 0)
-		if (buffer[0] == '\n')
-			lines++;
+	while (read(fd, buffer, 1) > 0 && buffer[0] != '\n')
+		cols++;
 	close(fd);
-	return (lines + 1);
+	return (cols);
 }
 
-char	**allocate_map(int rows, int cols)
+char	**allocate_map_grid(int rows, int cols)
 {
 	char	**map;
 	int		i;
 
-	map = malloc(sizeof(char *) * rows);
+	map = malloc(sizeof(char *) * (rows + 1));
 	if (!map)
+	{
+		ft_printf("Error: Failed to allocate map grid\n");
 		return (NULL);
+	}
 	i = 0;
 	while (i < rows)
 	{
-		map[i] = malloc(sizeof(char) * (cols + 1));
+		map[i] = malloc(cols + 1);
 		if (!map[i])
+		{
+			ft_printf("Error: Failed to allocate row %d\n", i);
+			while (i > 0)
+				free(map[--i]);
+			free(map);
 			return (NULL);
+		}
 		i++;
 	}
+	map[rows] = NULL;
 	return (map);
 }
 
-int	open_file(const char *filename)
+void	fill_map_grid(char **map, int fd, int rows, int cols)
 {
-	int	fd;
+	int		i;
+	char	*buffer;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		perror("Error opening file");
-	return (fd);
+	buffer = malloc(sizeof(char) * (cols + 2));
+	if (!buffer)
+	{
+		perror("Erreur d'allocation mémoire");
+		exit(1);
+	}
+	i = 0;
+	while (i < rows)
+	{
+		if (read(fd, buffer, cols + 1) <= 0)
+			break ;
+		buffer[cols] = '\0';
+		ft_strlcpy(map[i], buffer, cols + 1);
+		i++;
+	}
+	buffer[cols + 1] = '\0';
+	free(buffer);
 }
 
 char	**read_map(const char *filename, int *rows, int *cols)
 {
 	int		fd;
-	int		row_count;
-	char	buffer[1024];
 	char	**map;
 
-	*rows = count_lines(filename);
-	if (*rows <= 0)
+	*rows = count_map_rows(filename);
+	*cols = get_map_cols(filename);
+	if (*rows == 0 || *cols == 0)
+	{
+		ft_printf("Error: Invalid map dimensions\n");
+		return (NULL);
+	}
+	map = allocate_map_grid(*rows, *cols);
+	if (!map)
 		return (NULL);
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error opening file");
+		ft_printf("Error: Cannot open file to read map\n");
 		return (NULL);
 	}
-	row_count = 0;
-	map = allocate_map(*rows, *cols);
-	if (!map)
-		return (NULL);
-	while (read(fd, buffer, sizeof(buffer) - 1) > 0)
-	{
-		buffer[ft_strlen(buffer) - 1] = '\0';
-		ft_strlcpy(map[row_count], buffer, *cols);
-		row_count++;
-	}
+	fill_map_grid(map, fd, *rows, *cols);
 	close(fd);
 	return (map);
-}*/
+}
