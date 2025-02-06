@@ -6,7 +6,7 @@
 #    By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/27 14:42:36 by aoutumur          #+#    #+#              #
-#    Updated: 2025/02/04 14:25:36 by aoutumur         ###   ########.fr        #
+#    Updated: 2025/02/05 12:22:48 by aoutumur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ FT_PRINTF_FLAGS = -L$(FT_PRINTF_DIR) -lftprintf
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c draw_map.c load_sprites.c move_player.c read_map.c validate_map.c
+SRCS = main.c draw_map.c load_sprites.c move_player.c read_map.c validate_map.c init_game.c
 OBJS = $(SRCS:.c=.o)
 
 LIB_MLX = ./mlx/minilibx-linux/libmlx.a

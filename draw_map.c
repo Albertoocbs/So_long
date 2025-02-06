@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:12:49 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/04 12:23:46 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:16:31 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	put_tile_to_window(t_data *data, int x, int y, char tile)
 {
 	void	*img;
 
+	img = NULL;
 	if (tile == WALL)
 		img = data->wall_img;
 	else if (tile == FLOOR)
@@ -32,16 +33,20 @@ void	put_tile_to_window(t_data *data, int x, int y, char tile)
 		else
 			img = data->floor_img;
 	}
-	else
+	if (!img)
+	{
+		ft_printf("Erreur: Image NULL tile '%c' à x=%d, y=%d\n", tile, x, y);
 		return ;
+	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x * TILE_SIZE, y
 		* TILE_SIZE);
 }
 
-void	draw_map(t_data *data)
+int	draw_map(t_data *data)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
+	char	*moves_str;
 
 	y = 0;
 	while (y < data->rows)
@@ -54,4 +59,10 @@ void	draw_map(t_data *data)
 		}
 		y++;
 	}
+	moves_str = ft_itoa(data->moves);
+	if (!moves_str)
+		return (1);
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 28, 0xFFFFFF, "Moves: ");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 28, 0xFFFFFF, moves_str);
+	return (0);
 }

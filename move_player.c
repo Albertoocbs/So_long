@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:15:17 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/04 12:23:38 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 09:50:24 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	move_player(t_data *data, int new_x, int new_y)
 	data->player_x = new_x;
 	data->player_y = new_y;
 	data->moves++;
-	ft_printf("Mouvement #%d: (%d, %d)\n", data->moves, data->player_x,
-		data->player_y);
+	ft_printf("Mouvement: #%d\n", data->moves);
 	draw_map(data);
 }
 

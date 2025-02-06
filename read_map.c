@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:37:32 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/04 14:54:57 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 10:13:07 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**read_map(const char *filename, int *rows, int *cols)
 	char	**map;
 	int		row_count;
 	char	buffer[1024];
+	size_t	line_length;
 
 	file = fopen(filename, "r");
 	if (!file)
@@ -29,14 +30,31 @@ char	**read_map(const char *filename, int *rows, int *cols)
 	}
 	map = NULL;
 	row_count = 0;
+	*cols = 0;
 	while (fgets(buffer, sizeof(buffer), file))
 	{
+		line_length = strlen(buffer);
+		if (buffer[line_length - 1] == '\n')
+			buffer[line_length - 1] = '\0';
+		else
+			line_length++;
 		if (*cols == 0)
-			*cols = strlen(buffer) - 1;
+			*cols = line_length - 1;
 		map = realloc(map, sizeof(char *) * (row_count + 1));
-		map[row_count] = malloc(*cols + 1);
-		strncpy(map[row_count], buffer, *cols);
-		map[row_count][*cols] = '\0';
+		if (!map)
+		{
+			perror("Memory allocation error");
+			fclose(file);
+			return (NULL);
+		}
+		map[row_count] = malloc(line_length);
+		if (!map[row_count])
+		{
+			perror("Memory allocation error");
+			fclose(file);
+			return (NULL);
+		}
+		strcpy(map[row_count], buffer);
 		row_count++;
 	}
 	fclose(file);
