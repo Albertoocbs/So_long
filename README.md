@@ -14,6 +14,8 @@ Prior to starting with this project, it’s recomended to learn about the miniLi
 
 Before diving into the code, I highly recommend trying to implement the game mechanics yourself. Take the time to understand all the concepts, functions, and libraries involved in the project. Exploring the code can be helpful, but ensuring you grasp the fundamentals will provide a stronger learning experience and make troubleshooting easier. Remember, the journey of understanding is just as important as the final result!
 
+------
+
 **Example of a 2D basic game:**
 
 ![Screenshot from 2025-02-06 14-57-34](https://github.com/user-attachments/assets/4b527f27-9b34-4ba0-8a52-46de7dbf70ff)
