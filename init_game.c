@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:50:26 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 10:17:13 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 12:49:57 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	init_game(t_data *data, char *map_file)
 	data->win_ptr = NULL;
 	load_map(data, map_file);
 	find_player_and_collectibles(data);
+	check_valid_path(data);
 	init_minilibx(data);
 	init_image_buffer(data);
 }

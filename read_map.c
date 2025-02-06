@@ -6,13 +6,16 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:37:32 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 10:13:07 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 13:15:19 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf/libft/libft.h"
 #include "mlx/minilibx-linux/mlx.h"
 #include "so_long.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 char	**read_map(const char *filename, int *rows, int *cols)
 {

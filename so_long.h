@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:43 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 09:44:37 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/06 13:02:31 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_data
 	int		map_height;
 	int		collected;
 	int		total_collectibles;
+	int		exit_found;
+	int		acc_collectibles;
 	int		player_x;
 	int		player_y;
 	int		rows;
@@ -78,9 +80,6 @@ void		put_tile_to_window(t_data *data, int x, int y, char tile);
 void		move_player(t_data *data, int new_x, int new_y);
 /*--------------------read_map.c--------------------- */
 char		**read_map(const char *filename, int *rows, int *cols);
-int			count_lines(const char *filename);
-char		**allocate_map(int rows, int cols);
-
 /*--------------------validate_map.c----------------- */
 void		validate_map(t_data *data);
 void		count_elements(t_data *data, int *player_count, int *exit_count,
@@ -96,5 +95,9 @@ void		load_map(t_data *data, char *map_file);
 void		find_player_and_collectibles(t_data *data);
 void		init_minilibx(t_data *data);
 void		init_game(t_data *data, char *map_file);
+/*--------------------flood_fill.c-------------------*/
+void		flood_fill(char **map, int x, int y, t_data *data);
+char		**copy_map(t_data *data);
+void		check_valid_path(t_data *data);
 
 #endif
