@@ -1,4 +1,11 @@
 so_long
+
+<p align="center">
+  <a href="https://github.com/Albertoocbs/so_long">
+    <img src="https://github.com/Albertoocbs/So_long/blob/master/so_long_circular.png" width="100"/>
+  </a>
+</p>
+
 -------
 
 **Status**
