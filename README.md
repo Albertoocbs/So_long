@@ -1,3 +1,6 @@
+**Status**
+Finished: 2025-02-15. Grade: 100/100.
+
 **Overview**
 
 The 42 So_Long project is an exciting challenge where you build a 2D game using the MinilibX library, a lightweight graphics library provided by 42. In this game, players explore a map, collect items, and navigate around obstacles to reach the final destination.
