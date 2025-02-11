@@ -6,25 +6,12 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:50:26 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 12:49:57 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:04:44 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx/minilibx-linux/mlx.h"
 #include "so_long.h"
-
-void	init_image_buffer(t_data *data)
-{
-	data->img_buffer = mlx_new_image(data->mlx_ptr, data->cols * TILE_SIZE,
-			data->rows * TILE_SIZE);
-	if (!data->img_buffer)
-	{
-		ft_printf("Error: Could not create image buffer\n");
-		exit(1);
-	}
-	data->img_buffer_addr = mlx_get_data_addr(data->img_buffer,
-			&data->bits_per_pixel, &data->line_length, &data->endian);
-}
 
 /**
  * Charge la carte et vérifie sa validité.
@@ -35,6 +22,7 @@ void	load_map(t_data *data, char *map_file)
 	if (!data->map)
 	{
 		ft_printf("Erreur de chargement de la carte: %s\n", map_file);
+		destroy_and_exit(data);
 		exit(1);
 	}
 	validate_map(data);
@@ -106,5 +94,4 @@ void	init_game(t_data *data, char *map_file)
 	find_player_and_collectibles(data);
 	check_valid_path(data);
 	init_minilibx(data);
-	init_image_buffer(data);
 }

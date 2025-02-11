@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:07 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/11 12:31:08 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:03:07 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	destroy_and_exit(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->collectible_img);
 	mlx_destroy_image(data->mlx_ptr, data->floor_img);
 	mlx_destroy_image(data->mlx_ptr, data->exit_img);
-	mlx_destroy_image(data->mlx_ptr, data->img_buffer);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);

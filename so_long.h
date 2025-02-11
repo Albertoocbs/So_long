@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:43 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 14:07:19 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:03:14 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ typedef struct s_data
 	void	*img_buffer;
 	char	*img_buffer_addr;
 	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
 	int		map_width;
 	int		map_height;
 	int		collected;
@@ -93,8 +91,8 @@ void		check_dimensions(t_data *data);
 void		check_line_validity(t_data *data, int y);
 /*------------------------main.c--------------------- */
 void		free_map(char **map, int rows);
+void		destroy_and_exit(t_data *data);
 /*--------------------init_game.c------------------- */
-void		init_image_buffer(t_data *data);
 void		load_map(t_data *data, char *map_file);
 void		find_player_and_collectibles(t_data *data);
 void		init_minilibx(t_data *data);
