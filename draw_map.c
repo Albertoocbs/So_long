@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:12:49 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 12:33:47 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:06:47 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int	draw_map(t_data *data)
 		return (1);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 20, 28, 0xFFFFFF, "Moves: ");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 28, 0xFFFFFF, moves_str);
+	free(moves_str);
 	return (0);
 }

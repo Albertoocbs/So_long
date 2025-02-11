@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:37:32 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 14:23:20 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:52:05 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ char	**allocate_map_grid(int rows, int cols)
 		if (!map[i])
 		{
 			ft_printf("Error: Failed to allocate row %d\n", i);
-			while (i > 0)
-				free(map[--i]);
-			free(map);
+			free_map(map, i);
 			return (NULL);
 		}
 		i++;
@@ -127,6 +125,7 @@ char	**read_map(const char *filename, int *rows, int *cols)
 	if (fd == -1)
 	{
 		ft_printf("Error: Cannot open file to read map\n");
+		free_map(map, *rows);
 		return (NULL);
 	}
 	fill_map_grid(map, fd, *rows, *cols);

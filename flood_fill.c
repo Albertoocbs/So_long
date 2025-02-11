@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:50:31 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 13:02:35 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 11:54:22 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**copy_map(t_data *data)
 			perror("Erreur d'allocation mémoire");
 			exit(1);
 		}
-		strncpy(map_copy[y], data->map[y], data->cols);
+		ft_strlcpy(map_copy[y], data->map[y], data->cols);
 		map_copy[y][data->cols] = '\0';
 		y++;
 	}
@@ -60,7 +60,6 @@ char	**copy_map(t_data *data)
 void	check_valid_path(t_data *data)
 {
 	char	**map_copy;
-	int		y;
 
 	if (data->player_x < 0 || data->player_x >= data->cols || data->player_y < 0
 		|| data->player_y >= data->rows)
@@ -72,10 +71,7 @@ void	check_valid_path(t_data *data)
 	data->exit_found = 0;
 	map_copy = copy_map(data);
 	flood_fill(map_copy, data->player_x, data->player_y, data);
-	y = 0;
-	while (y < data->rows)
-		free(map_copy[y++]);
-	free(map_copy);
+	free_map(map_copy, data->rows);
 	if (data->acc_collectibles != data->total_collectibles || !data->exit_found)
 	{
 		if (data->acc_collectibles != data->total_collectibles)

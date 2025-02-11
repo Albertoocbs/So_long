@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:07 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 14:24:28 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:31:08 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_map(char **map, int rows)
 	free(map);
 }
 
-int	close_window(t_data *data)
+void	destroy_and_exit(t_data *data)
 {
 	mlx_destroy_image(data->mlx_ptr, data->wall_img);
 	mlx_destroy_image(data->mlx_ptr, data->player_img);
@@ -42,9 +42,16 @@ int	close_window(t_data *data)
 	mlx_destroy_image(data->mlx_ptr, data->exit_img);
 	mlx_destroy_image(data->mlx_ptr, data->img_buffer);
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	ft_printf("Fenetre fermé avec button x\n");
+	mlx_destroy_display(data->mlx_ptr);
+	free(data->mlx_ptr);
 	free_map(data->map, data->rows);
 	exit(0);
+}
+
+int	close_window(t_data *data)
+{
+	ft_printf("Fenetre fermé avec button x\n");
+	destroy_and_exit(data);
 	return (0);
 }
 
@@ -52,10 +59,8 @@ int	handle_keypress(int keycode, t_data *data)
 {
 	if (keycode == ESC_KEY)
 	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		free_map(data->map, data->rows);
 		ft_printf("Fenetre fermé avec ESC\n");
-		exit(0);
+		destroy_and_exit(data);
 	}
 	if (keycode == W_KEY)
 		move_player(data, data->player_x, data->player_y - 1);
@@ -97,6 +102,9 @@ int	main(int argc, char **argv)
 	mlx_key_hook(data.win_ptr, handle_keypress, &data);
 	mlx_hook(data.win_ptr, CLOSE_EVENT, 0, close_window, &data);
 	mlx_loop(data.mlx_ptr);
-	free_map(data.map, data.rows);
+	destroy_and_exit(&data);
 	return (0);
 }
+/*Toutes les ressources MiniLibX et mém dynamique sont correctement libérées
+Les blocs 'still reachable' sont dus aux allocs internes
+de X11/MiniLibX sous Linux, ce qui est normal et hors de notre contrôle.*/
