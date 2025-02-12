@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 10:16:07 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/11 14:03:07 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:53:28 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,22 @@ void	free_map(char **map, int rows)
 
 void	destroy_and_exit(t_data *data)
 {
-	mlx_destroy_image(data->mlx_ptr, data->wall_img);
-	mlx_destroy_image(data->mlx_ptr, data->player_img);
-	mlx_destroy_image(data->mlx_ptr, data->collectible_img);
-	mlx_destroy_image(data->mlx_ptr, data->floor_img);
-	mlx_destroy_image(data->mlx_ptr, data->exit_img);
-	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	if (data->wall_img)
+		mlx_destroy_image(data->mlx_ptr, data->wall_img);
+	if (data->player_img)
+		mlx_destroy_image(data->mlx_ptr, data->player_img);
+	if (data->collectible_img)
+		mlx_destroy_image(data->mlx_ptr, data->collectible_img);
+	if (data->floor_img)
+		mlx_destroy_image(data->mlx_ptr, data->floor_img);
+	if (data->exit_img)
+		mlx_destroy_image(data->mlx_ptr, data->exit_img);
+	if (data->win_ptr)
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	data->win_ptr = NULL;
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
+	data->mlx_ptr = NULL;
 	free_map(data->map, data->rows);
 	exit(0);
 }

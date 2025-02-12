@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:15:17 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/06 12:33:59 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 10:53:29 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	move_player(t_data *data, int new_x, int new_y)
 		&& data->collected == data->total_collectibles)
 	{
 		ft_printf("Bravo ! Vous avez gagné !\n");
-		exit(0);
+		destroy_and_exit(data);
 	}
 	data->map[data->player_y][data->player_x] = FLOOR;
 	data->map[new_y][new_x] = PLAYER;

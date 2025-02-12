@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:50:26 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/11 14:04:44 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 11:10:51 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	load_map(t_data *data, char *map_file)
 	if (!data->map)
 	{
 		ft_printf("Erreur de chargement de la carte: %s\n", map_file);
-		destroy_and_exit(data);
 		exit(1);
 	}
 	validate_map(data);
