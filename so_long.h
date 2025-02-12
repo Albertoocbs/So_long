@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:43 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/11 14:03:14 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:36 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ void		init_game(t_data *data, char *map_file);
 void		flood_fill(char **map, int x, int y, t_data *data);
 char		**copy_map(t_data *data);
 void		check_valid_path(t_data *data);
+/*--------------------error_exit.c-------------------*/
+void		free_and_exit(t_data *data);
 
 #endif

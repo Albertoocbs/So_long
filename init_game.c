@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:50:26 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/12 11:10:51 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:05 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	load_map(t_data *data, char *map_file)
 	if (!data->map)
 	{
 		ft_printf("Erreur de chargement de la carte: %s\n", map_file);
-		exit(1);
+		free_and_exit(data);
 	}
 	validate_map(data);
 }
@@ -65,14 +65,14 @@ void	init_minilibx(t_data *data)
 	if (!data->mlx_ptr)
 	{
 		ft_printf("Erreur: MiniLibX n'a pas pu être initialisé.\n");
-		exit(1);
+		free_and_exit(data);
 	}
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->cols * TILE_SIZE,
 			data->rows * TILE_SIZE, "so_long");
 	if (!data->win_ptr)
 	{
 		ft_printf("Erreur: Impossible de créer la fenêtre MiniLibX.\n");
-		exit(1);
+		free_and_exit(data);
 	}
 }
 

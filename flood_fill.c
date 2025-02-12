@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 12:50:31 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/12 11:11:14 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:03 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**copy_map(t_data *data)
 	if (!map_copy)
 	{
 		perror("Erreur d'allocation mémoire");
-		exit(1);
+		free_and_exit(data);
 	}
 	y = 0;
 	while (y < data->rows)
@@ -48,9 +48,9 @@ char	**copy_map(t_data *data)
 		if (!map_copy[y])
 		{
 			perror("Erreur d'allocation mémoire");
-			exit(1);
+			free_and_exit(data);
 		}
-		ft_strlcpy(map_copy[y], data->map[y], data->cols);
+		ft_strlcpy(map_copy[y], data->map[y], data->cols + 1);
 		map_copy[y][data->cols] = '\0';
 		y++;
 	}
@@ -64,20 +64,22 @@ void	check_valid_path(t_data *data)
 	if (data->player_x < 0 || data->player_x >= data->cols || data->player_y < 0
 		|| data->player_y >= data->rows)
 	{
-		ft_printf("Erreur position du joueur\n");
-		exit(1);
+		perror("Erreur position du joueur\n");
+		free_and_exit(data);
 	}
 	data->acc_collectibles = 0;
 	data->exit_found = 0;
 	map_copy = copy_map(data);
 	flood_fill(map_copy, data->player_x, data->player_y, data);
 	free_map(map_copy, data->rows);
-	if (data->acc_collectibles != data->total_collectibles || !data->exit_found)
+	if (data->acc_collectibles != data->total_collectibles)
 	{
-		if (data->acc_collectibles != data->total_collectibles)
-			ft_printf("Erreur: Tous les collectibles ne sont pas accessibles\n");
-		if (!data->exit_found)
-			ft_printf("Erreur: La sortie n'est pas accessible\n");
-		exit(1);
+		perror("Erreur: Tous les collectibles ne sont pas accessibles\n");
+		free_and_exit(data);
+	}
+	if (!data->exit_found)
+	{
+		perror("Erreur: La sortie n'est pas accessible\n");
+		free_and_exit(data);
 	}
 }

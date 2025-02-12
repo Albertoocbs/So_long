@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:12:49 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/12 10:53:19 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:00 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	put_tile_to_window(t_data *data, int x, int y, char tile)
 	}
 	if (!img)
 	{
-		ft_printf("Erreur: Image NULL tile '%c' à x=%d, y=%d\n", tile, x, y);
-		return ;
+		ft_printf("Erreur: caractere invalide '%c' à x=%d, y=%d\n", tile, x, y);
+		free_and_exit(data);
 	}
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, img, x * TILE_SIZE, y
 		* TILE_SIZE);

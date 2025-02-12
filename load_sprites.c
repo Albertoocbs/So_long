@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:02:01 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/12 11:07:56 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:06 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	load_sprites(t_data *data)
 		|| !data->collectible_img || !data->wall_img)
 	{
 		ft_printf("Error loading images\n");
-		exit(1);
+		free_and_exit(data);
 	}
 }

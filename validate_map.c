@@ -6,7 +6,7 @@
 /*   By: aoutumur <aoutumur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 12:23:53 by aoutumur          #+#    #+#             */
-/*   Updated: 2025/02/12 11:10:31 by aoutumur         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:43 by aoutumur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	check_line_validity(t_data *data, int y)
 	if (line_length != data->cols)
 	{
 		ft_printf("Erreur: Dimensions de carte invalides\n");
-		exit(1);
+		free_and_exit(data);
 	}
 }
 
@@ -40,7 +40,7 @@ void	check_dimensions(t_data *data)
 	if (data->rows <= 0 || data->cols <= 0)
 	{
 		ft_printf("Erreur: Dimensions de carte invalides (0 ou négative)\n");
-		exit(1);
+		free_and_exit(data);
 	}
 	y = 0;
 	while (y < data->rows)
@@ -61,7 +61,7 @@ void	check_walls(t_data *data)
 		if (data->map[0][x] != WALL || data->map[data->rows - 1][x] != WALL)
 		{
 			ft_printf("Erreur: La carte n'est pas entourée de murs!\n");
-			exit(1);
+			free_and_exit(data);
 		}
 		x++;
 	}
@@ -71,7 +71,7 @@ void	check_walls(t_data *data)
 		if (data->map[y][0] != WALL || data->map[y][data->cols - 1] != WALL)
 		{
 			ft_printf("Erreur: La carte n'est pas entourée de murs !\n");
-			exit(1);
+			free_and_exit(data);
 		}
 		y++;
 	}
@@ -121,11 +121,11 @@ void	validate_map(t_data *data)
 		if (exit_count != 1)
 			ft_printf("Erreur: Il doit y avoir une sortie, trouvée: %d\n",
 				exit_count);
-		exit(1);
+		free_and_exit(data);
 	}
 	if (collectible_count < 1)
 	{
 		ft_printf("Erreur: Il doit y avoir au moins un collectible\n");
-		exit(1);
+		free_and_exit(data);
 	}
 }
